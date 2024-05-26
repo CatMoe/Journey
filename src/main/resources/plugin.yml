@@ -1,0 +1,8 @@
+name: Journey
+version: '${version}'
+api-version: 1.13
+main: net.miaomoe.journey.JourneyLoader
+author: CatMoe
+softdepend:
+  - ViaVersion
+  - ProtocolLib
