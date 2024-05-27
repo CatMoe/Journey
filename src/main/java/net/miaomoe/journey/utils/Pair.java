@@ -70,18 +70,35 @@ public class Pair<A, B> {
         return toMap(pairs, HashMap::new);
     }
 
-    public static <K, V, M extends Map<K, V>> @NotNull M toMap(final Collection<Pair<K, V>> pairs, final @NotNull Supplier<M> supplier) {
-        final M map = checkNotNull(checkNotNull(supplier, "supplier").get(), "map");
+    public static <K, V, M extends Map<K, V>> @NotNull M toMap(final Collection<Pair<K, V>> pairs, final @NotNull Supplier<M> mapSupplier) {
+        final M map = checkNotNull(checkNotNull(mapSupplier, "supplier").get(), "map");
         for (final Pair<K, V> pair : checkNotNull(pairs, "pairs")) map.put(pair.a, pair.b);
         return map;
+    }
+
+    public static <T, K, V, M extends Map<K, V>> @NotNull M toMap(
+            final @NotNull Collection<T> list,
+            final @NotNull Function<T, K> aProvider,
+            final @NotNull Function<T, V> bProvider,
+            final @NotNull Supplier<M> mapSupplier
+    ) {
+        return toMap(toPairSet(list, aProvider, bProvider), mapSupplier);
+    }
+
+    public static <T, K, V> @NotNull Map<K, V> toMap(
+            final @NotNull Collection<T> list,
+            final @NotNull Function<T, K> aProvider,
+            final @NotNull Function<T, V> bProvider
+    ) {
+        return toMap(toPairSet(list, aProvider, bProvider));
     }
 
     public static <K, V> @NotNull Map<K, V> toMapReversed(final @NotNull Collection<Pair<V, K>> pairs) {
         return toMapReversed(pairs, HashMap::new);
     }
 
-    public static <K, V, M extends Map<K, V>> @NotNull Map<K, V> toMapReversed(final @NotNull Collection<Pair<V, K>> pairs, final @NotNull Supplier<M> supplier) {
-        final M map = checkNotNull(checkNotNull(supplier, "supplier").get(), "map");
+    public static <K, V, M extends Map<K, V>> @NotNull Map<K, V> toMapReversed(final @NotNull Collection<Pair<V, K>> pairs, final @NotNull Supplier<M> mapSupplier) {
+        final M map = checkNotNull(checkNotNull(mapSupplier, "supplier").get(), "map");
         for (final Pair<V, K> pair : checkNotNull(pairs, "pairs")) map.put(pair.b, pair.a);
         return map;
     }
