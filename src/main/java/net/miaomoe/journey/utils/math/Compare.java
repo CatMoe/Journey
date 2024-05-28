@@ -74,4 +74,25 @@ public interface Compare {
         @Override public boolean compare(final float a, final float b) { return a >= b; }
         @Override public boolean compare(final byte a, final byte b) { return a >= b; }
     };
+
+    // Proxy interfaces as enum
+    enum Enum implements Compare {
+        EQUAL(Compare.EQUAL),
+        NOT_EQUAL(Compare.NOT_EQUAL),
+        LESS_THAN(Compare.LESS_THAN),
+        LESS_THAN_EQUAL(Compare.LESS_THAN_EQUAL),
+        GREATER_THAN(Compare.GREATER_THAN),
+        GREATER_THAN_EQUAL(Compare.GREATER_THAN_EQUAL),;
+
+        private final Compare compare;
+        Enum(final Compare compare) {
+            this.compare = compare;
+        }
+
+        @Override public boolean compare(int a, int b) { return compare.compare(a, b); }
+        @Override public boolean compare(long a, long b) { return compare.compare(a, b); }
+        @Override public boolean compare(double a, double b) { return compare.compare(a, b); }
+        @Override public boolean compare(float a, float b) { return compare.compare(a, b); }
+        @Override public boolean compare(byte a, byte b) { return compare.compare(a, b); }
+    }
 }
