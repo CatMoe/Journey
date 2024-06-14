@@ -36,7 +36,7 @@ import java.util.logging.Level;
 
 import static net.miaomoe.journey.utils.Preconditions.checkNotNull;
 
-@SuppressWarnings({"unused", "CommentedOutCode"})
+@SuppressWarnings({"unused"})
 public final class JourneyLoader extends JavaPlugin {
     @Getter private static JourneyLoader instance = null;
     @Getter private boolean enable = false;
@@ -68,7 +68,7 @@ public final class JourneyLoader extends JavaPlugin {
             ));
             add(new LibraryBundle(
                     "{serializer}legacy.LegacyComponentSerializer",
-                    simpleBuilder("net.kyori", "{serializer}-legacy", adventureVersion)
+                    simpleBuilder("net.kyori", "{serializer}legacy", adventureVersion)
             ));
             add(new LibraryBundle(
                     "{serializer}plain.PlainTextComponentSerializer",
@@ -78,17 +78,6 @@ public final class JourneyLoader extends JavaPlugin {
                     "net.kyori.adventure.platform.bukkit.BukkitAudiences",
                     simpleBuilder("net.kyori", "adventure-platform-bukkit", "4.3.2")
             ));
-            /*
-            add(new LibraryBundle(
-                    "com.github.benmanes.caffeine.cache.Caffeine",
-                    simpleBuilder("com.github.ben-manes.caffeine", "caffeine", "3.1.8")
-            ));
-            add(new LibraryBundle(
-                    "", simpleBuilder(
-                    "com.github.cryptomorin", "XSeries", "9.9.0",
-                    new Relocation("com{}cryptomorin{}xseries", "net{}miaomoe{}meteori{}libs{}xseries")
-            )));
-             */
         }};
         final Library[] array = libraryBundleList
                 .stream()
@@ -155,19 +144,6 @@ public final class JourneyLoader extends JavaPlugin {
             getLogger().log(Level.SEVERE, "Access inventory listener failed", exception);
         }
         final Journey<JourneyLoader> journey = getJourney(this);
-        /*
-        journey.getCommandManager()
-                .register(false, CommandInfo.of("test", new StreamCommand(
-                        journey, stream -> stream
-                        .breakIf(it -> it.checkArgsLength(Compare.NOT_EQUAL, 0), "<red>Too many arguments")
-                        .breakStream("uwu")
-                )).permission("journey.test").addAliases("t"))
-                .register(true, CommandInfo.of("version",  new StreamCommand(
-                        journey, stream -> stream
-                        .breakIf(it -> !it.getSender().isPlayer(), "<red>Not a player")
-                        .breakStream("Protocol Version: " + stream.invocation().getSender().cast(PlayerSender.class, true).protocolVersion())
-                )));
-         */
     }
 
     @SuppressWarnings("unchecked")
