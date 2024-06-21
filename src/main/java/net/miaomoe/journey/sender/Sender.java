@@ -52,6 +52,7 @@ public abstract class Sender<T extends CommandSender, U extends Sender<?, ?>> im
         return getThis();
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public final @NotNull U sendMessage(final @NotNull PresetsSerializer<?> serializer, final @NotNull String message) {
         return sendMessage(PresetsSerializer.deserialize(serializer, message));
     }
@@ -70,6 +71,22 @@ public abstract class Sender<T extends CommandSender, U extends Sender<?, ?>> im
     @SuppressWarnings("UnusedReturnValue")
     public final U sendMessage(final @NotNull PresetsSerializer<?> serializer, final @Nullable List<String> messages) {
         return sendMessage(serializer, Optional.ofNullable(messages).orElse(Collections.emptyList()).toArray(new String[0]));
+    }
+
+    public final boolean hasPermission(final @NotNull String permission) {
+        return getBukkitObject().hasPermission(checkNotNull(permission, "permission"));
+    }
+
+    public U addMetadata(final @NotNull String key, final @NotNull Object value) {
+        throw new UnsupportedOperationException("Not support on this sender type.");
+    }
+
+    public U removeMetadata(final @NotNull String key) {
+        throw new UnsupportedOperationException("Not support on this sender type");
+    }
+
+    public boolean hasMetadata(final @NotNull String key) {
+        return false;
     }
 
     private @NotNull U getThis() { return (U) this; }
