@@ -24,6 +24,7 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 import net.miaomoe.journey.command.CommandInvocation;
 import net.miaomoe.journey.functions.exceptionally.ExceptionBiConsumer;
+import net.miaomoe.journey.functions.exceptionally.ExceptionConsumer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -51,7 +52,7 @@ public abstract class AbstractCommandStream<T extends AbstractCommandStream<?>> 
     }
 
     public final @NotNull T tryCatching(
-            final @NotNull Consumer<@NotNull CommandInvocation> func,
+            final @NotNull ExceptionConsumer<@NotNull CommandInvocation> func,
             final @NotNull Consumer<@NotNull Throwable> onException
     ) {
         try {
