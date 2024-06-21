@@ -89,7 +89,7 @@ public class ClientVersion implements Module {
     });
 
     private static final Lazy<Function<Player, OptionalInt>> packetEvents = new Lazy<>(() -> {
-       Preconditions.checkArgument(isInstalled("PacketEvents"), "PacketEvents is not installed");
+       Preconditions.checkArgument(isInstalled("packetevents"), "packetevents is not installed");
        final String prefix = "com.github.retrooper.packetevents.";
        final Object api = MethodHandles
                .publicLookup()
@@ -114,8 +114,8 @@ public class ClientVersion implements Module {
     @SuppressWarnings({"deprecation", "JavaLangInvokeHandleSignature"})
     private static final Lazy<Integer> serverVersion = new Lazy<>(() -> (int) MethodHandles
             .publicLookup()
-            .findStatic(UnsafeValues.class, "getProtocolVersion", MethodType.methodType(int.class))
-            .invokeExact()
+            .findVirtual(UnsafeValues.class, "getProtocolVersion", MethodType.methodType(int.class))
+            .invokeExact(Bukkit.getUnsafe())
     );
 
     public int protocolVersion(final @NotNull Player player) throws IllegalArgumentException {
