@@ -19,11 +19,15 @@ package net.miaomoe.journey.command.stream;
 
 import lombok.SneakyThrows;
 import net.miaomoe.journey.Journey;
+import net.miaomoe.journey.adventure.PresetsSerializer;
 import net.miaomoe.journey.command.CommandInvocation;
 import net.miaomoe.journey.utils.Preconditions;
 import net.miaomoe.journey.utils.ThreadUtil;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
 import java.util.logging.Level;
 
 @SuppressWarnings("unused")
@@ -42,7 +46,15 @@ public final class CommandStream extends AbstractCommandStream<CommandStream> {
                 try {
                     runnable.run();
                 } catch (final Throwable e) {
-                    journey.getPlugin().getLogger().log(Level.WARNING, "Unhandled exception on stream commands. - Thread " + Thread.currentThread().getName(), e);
+                    if (e instanceof StreamBreakException) {
+                        final CommandSender sender = invocation().getBukkitSender();
+                        if (sender instanceof Player && !((Player) sender).isOnline()) return;
+                        Optional
+                                .ofNullable(((StreamBreakException) e).getResult())
+                                .ifPresent(it -> it.forEach(msg -> invocation().getSender().sendMessage(PresetsSerializer.miniMessage, msg)));
+                    } else {
+                        journey.getPlugin().getLogger().log(Level.WARNING, "Unhandled exception on stream commands. - Thread " + Thread.currentThread().getName(), e);
+                    }
                 }
             });
         }
