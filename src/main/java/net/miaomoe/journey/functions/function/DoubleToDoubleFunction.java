@@ -15,9 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.miaomoe.journey.functions;
+package net.miaomoe.journey.functions.function;
 
 @FunctionalInterface
+@SuppressWarnings("unused")
 public interface DoubleToDoubleFunction {
     double apply(double x);
 }

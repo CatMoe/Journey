@@ -15,9 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.miaomoe.journey.functions;
+package net.miaomoe.journey.functions.consumer;
 
 @FunctionalInterface
-public interface IntToIntFunction {
-    int apply(int value);
+public interface BooleanConsumer {
+    void accept(boolean b);
 }

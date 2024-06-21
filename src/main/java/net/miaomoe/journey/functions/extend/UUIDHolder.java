@@ -15,22 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.miaomoe.journey.functions;
+package net.miaomoe.journey.functions.extend;
 
-import lombok.SneakyThrows;
-import net.miaomoe.journey.utils.Preconditions;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.function.Function;
+import java.util.UUID;
 
-@FunctionalInterface
-public interface ExceptionFunction<T, R> {
-    R apply(T t) throws Throwable;
-    default Function<T, R> asFunction() {
-        return arg -> get(this, arg);
-    }
-
-    @SneakyThrows
-    static <T, R> R get(final ExceptionFunction<T, R> supplier, final T arg) {
-        return Preconditions.checkNotNull(supplier, "supplier").apply(arg);
-    }
+@SuppressWarnings("unused")
+public interface UUIDHolder {
+    @NotNull UUID uuid();
 }

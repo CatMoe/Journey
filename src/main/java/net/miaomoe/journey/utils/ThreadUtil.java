@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import net.miaomoe.journey.Journey;
 import net.miaomoe.journey.JourneyLoader;
-import net.miaomoe.journey.functions.ExceptionSupplier;
+import net.miaomoe.journey.functions.exceptionally.ExceptionSupplier;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 

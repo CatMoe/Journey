@@ -15,9 +15,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.miaomoe.journey.functions;
+package net.miaomoe.journey.functions.exceptionally;
+
+import lombok.SneakyThrows;
+
+import java.util.function.BiConsumer;
 
 @FunctionalInterface
-public interface LongToLongFunction {
-    long apply(long value);
+@SuppressWarnings("unused")
+public interface ExceptionBiConsumer<T, U> {
+    void accept(final T arg1, final U arg2) throws Throwable;
+    default BiConsumer<T, U> asBiConsumer() {
+        return (arg1, arg2) -> accept(arg1, arg2, this);
+    }
+
+    @SneakyThrows
+    static <T, U> void accept(final T arg1, final U arg2, final ExceptionBiConsumer<T, U> consumer) {
+        consumer.accept(arg1, arg2);
+    }
 }

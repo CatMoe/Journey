@@ -19,7 +19,7 @@ package net.miaomoe.journey.modules.impl;
 
 import lombok.Getter;
 import net.miaomoe.journey.Journey;
-import net.miaomoe.journey.functions.ExceptionFunction;
+import net.miaomoe.journey.functions.exceptionally.ExceptionFunction;
 import net.miaomoe.journey.modules.Module;
 import net.miaomoe.journey.utils.Lazy;
 import net.miaomoe.journey.utils.Preconditions;

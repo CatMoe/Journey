@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.text.Component;
 import net.miaomoe.journey.Journey;
 import net.miaomoe.journey.adventure.PresetsSerializer;
-import net.miaomoe.journey.functions.BukkitBridge;
+import net.miaomoe.journey.functions.extend.BukkitBridge;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -67,6 +67,7 @@ public abstract class Sender<T extends CommandSender, U extends Sender<?, ?>> im
         return sendMessage(components);
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public final U sendMessage(final @NotNull PresetsSerializer<?> serializer, final @Nullable List<String> messages) {
         return sendMessage(serializer, Optional.ofNullable(messages).orElse(Collections.emptyList()).toArray(new String[0]));
     }

@@ -23,12 +23,11 @@ import lombok.SneakyThrows;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import net.miaomoe.journey.command.CommandInvocation;
-import net.miaomoe.journey.functions.ExceptionBiConsumer;
+import net.miaomoe.journey.functions.exceptionally.ExceptionBiConsumer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -38,7 +37,7 @@ import static net.miaomoe.journey.utils.Preconditions.checkNotNull;
 @ToString
 @Accessors(fluent = true)
 @RequiredArgsConstructor
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "unused"})
 public abstract class AbstractCommandStream<T extends AbstractCommandStream<?>> {
     private final @NotNull CommandInvocation invocation;
 
@@ -52,14 +51,14 @@ public abstract class AbstractCommandStream<T extends AbstractCommandStream<?>> 
     }
 
     public final @NotNull T tryCatching(
-            final @NotNull ExceptionBiConsumer<@NotNull T, @NotNull CommandInvocation> func,
-            final @NotNull BiConsumer<@NotNull T, @NotNull Throwable> onException
+            final @NotNull Consumer<@NotNull CommandInvocation> func,
+            final @NotNull Consumer<@NotNull Throwable> onException
     ) {
         try {
-            func.accept((T) this, invocation());
+            func.accept(invocation());
         } catch (final Throwable throwable) {
             if (throwable instanceof StreamBreakException) throw (StreamBreakException) throwable;
-            onException.accept((T) this, throwable);
+            onException.accept(throwable);
         }
         return (T) this;
     }

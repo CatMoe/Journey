@@ -15,23 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.miaomoe.journey.functions;
-
-import lombok.SneakyThrows;
-import net.miaomoe.journey.utils.Preconditions;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.function.Consumer;
+package net.miaomoe.journey.functions.function;
 
 @FunctionalInterface
-public interface ExceptionConsumer<T> {
-    void accept(final T value) throws Throwable;
-    default @NotNull Consumer<T> asConsumer() {
-        return it -> ExceptionConsumer.accept(this, it);
-    }
-
-    @SneakyThrows
-    static <T> void accept(final ExceptionConsumer<T> consumer, final T value) {
-        Preconditions.checkNotNull(consumer, "consumer").accept(value);
-    }
+@SuppressWarnings("unused")
+public interface IntToIntFunction {
+    int apply(int value);
 }

@@ -15,12 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.miaomoe.journey.functions;
+package net.miaomoe.journey.functions.supplier;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.UUID;
-
-public interface UUIDHolder {
-    @NotNull UUID uuid();
+@FunctionalInterface
+public interface FloatSupplier {
+    float getAsFloat();
 }

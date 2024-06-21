@@ -20,14 +20,15 @@ package net.miaomoe.journey.command.impl;
 import lombok.SneakyThrows;
 import net.miaomoe.journey.Journey;
 import net.miaomoe.journey.command.CommandInvocation;
-import net.miaomoe.journey.functions.ExceptionConsumer;
-import net.miaomoe.journey.functions.ExceptionFunction;
+import net.miaomoe.journey.functions.exceptionally.ExceptionConsumer;
+import net.miaomoe.journey.functions.exceptionally.ExceptionFunction;
 import net.miaomoe.journey.utils.Preconditions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public final class FunctionCommand extends AbstractCommand {
     private final @NotNull ExceptionConsumer<@NotNull CommandInvocation> onCommand;
     private final @Nullable ExceptionFunction<@NotNull CommandInvocation, @Nullable List<String>> onTabComplete;

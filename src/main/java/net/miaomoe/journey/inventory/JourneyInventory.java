@@ -19,7 +19,7 @@ package net.miaomoe.journey.inventory;
 
 import net.miaomoe.journey.Journey;
 import net.miaomoe.journey.JourneyLoader;
-import net.miaomoe.journey.functions.ExceptionBiConsumer;
+import net.miaomoe.journey.functions.exceptionally.ExceptionBiConsumer;
 import net.miaomoe.journey.utils.Preconditions;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,6 +33,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
 
+@SuppressWarnings("unused")
 public interface JourneyInventory<P extends JavaPlugin> extends InventoryHolder {
     @NotNull Journey<P> getJourney();
     @NotNull Player getPlayer();

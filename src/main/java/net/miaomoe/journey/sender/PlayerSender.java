@@ -21,7 +21,7 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.miaomoe.journey.Journey;
 import net.miaomoe.journey.adventure.PresetsSerializer;
-import net.miaomoe.journey.functions.UUIDHolder;
+import net.miaomoe.journey.functions.extend.UUIDHolder;
 import net.miaomoe.journey.modules.impl.ClientVersion;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -31,9 +31,10 @@ import java.util.UUID;
 
 import static net.miaomoe.journey.utils.Preconditions.checkNotNull;
 
-public class PlayerSender extends Sender<Player, PlayerSender> implements UUIDHolder {
+@SuppressWarnings("unused")
+public final class PlayerSender extends Sender<Player, PlayerSender> implements UUIDHolder {
     private final Audience audience;
-    protected PlayerSender(Journey<?> journey, Player player) {
+    PlayerSender(Journey<?> journey, Player player) {
         super(journey, player, player.getName());
         this.audience = journey.audiences().sender(player);
     }

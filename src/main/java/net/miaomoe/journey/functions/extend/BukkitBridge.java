@@ -15,23 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.miaomoe.journey.functions;
+package net.miaomoe.journey.functions.extend;
 
-import lombok.SneakyThrows;
-import net.miaomoe.journey.utils.Preconditions;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.function.Supplier;
-
-@FunctionalInterface
-public interface ExceptionSupplier<T> {
-    T get() throws Throwable;
-    default @NotNull Supplier<T> asSupplier() {
-        return () -> get(this);
-    }
-
-    @SneakyThrows
-    static <T> T get(final ExceptionSupplier<T> supplier) {
-        return Preconditions.checkNotNull(supplier, "supplier").get();
-    }
+public interface BukkitBridge<T> {
+    @NotNull T getBukkitObject();
 }

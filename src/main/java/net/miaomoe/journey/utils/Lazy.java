@@ -20,7 +20,7 @@ package net.miaomoe.journey.utils;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.ToString;
-import net.miaomoe.journey.functions.ExceptionSupplier;
+import net.miaomoe.journey.functions.exceptionally.ExceptionSupplier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -50,6 +50,7 @@ public final class Lazy<T> {
         return value;
     }
 
+    @SuppressWarnings("unused")
     public @Nullable T getValueDirectly() {
         return value;
     }
