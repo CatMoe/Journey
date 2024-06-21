@@ -45,10 +45,10 @@ public abstract class AbstractCommandStream<T extends AbstractCommandStream<?>> 
 
     public final @NotNull T ifExpress(
             final boolean express,
-            final @NotNull Consumer<T> ifTrue,
-            final @NotNull Consumer<T> ifFalse
+            final @NotNull Runnable ifTrue,
+            final @NotNull Runnable ifFalse
     ) {
-        (express ? checkNotNull(ifTrue, "ifTrue") : checkNotNull(ifFalse, "ifFalse")).accept((T) this);
+        (express ? checkNotNull(ifTrue, "ifTrue") : checkNotNull(ifFalse, "ifFalse")).run();
         return (T) this;
     }
 
