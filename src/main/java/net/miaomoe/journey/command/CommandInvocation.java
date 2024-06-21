@@ -17,9 +17,13 @@
 
 package net.miaomoe.journey.command;
 
-import lombok.*;
+import com.google.common.annotations.Beta;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
 import net.miaomoe.journey.Journey;
 import net.miaomoe.journey.sender.Sender;
+import net.miaomoe.journey.utils.Pair;
 import net.miaomoe.journey.utils.Preconditions;
 import net.miaomoe.journey.utils.math.Compare;
 import org.bukkit.Bukkit;
@@ -29,8 +33,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiFunction;
+
+import static net.miaomoe.journey.utils.Preconditions.checkNotNull;
 
 @Getter
 @ToString
@@ -42,13 +50,14 @@ public final class CommandInvocation {
     @NotNull private final String aliases;
     @NotNull private final String[] args;
     @NotNull private final Sender<?, ?> sender;
+    @NotNull private final Map<Pair<Integer, ArgType<?>>, Object> cachedArgsResult = new HashMap<>();
 
     public <T> @NotNull T getArg(@NotNull final ArgType<T> type, final int index) throws IllegalArgumentException, IndexOutOfBoundsException {
-        return Preconditions.checkNotNull(type, "type").parse(args[index]);
+        return checkNotNull(type, "type").parse(args[index]);
     }
 
     public boolean checkArgsLength(final @NotNull Compare compare, final int excepted) {
-        return Preconditions.checkNotNull(compare, "compare").compare(excepted, getArgs().length);
+        return checkNotNull(compare, "compare").compare(excepted, getArgs().length);
     }
 
     public <T> @NotNull T getArg(
@@ -58,25 +67,43 @@ public final class CommandInvocation {
     ) {
         String arg = null;
         try {
-            return Preconditions.checkNotNull(type, "type").parse(arg = args[index]);
+            return checkNotNull(type, "type").parse(arg = args[index]);
         } catch (final RuntimeException exception) {
-            return Preconditions.checkNotNull(function, "function").apply(arg, exception);
+            return checkNotNull(function, "function").apply(arg, exception);
         }
     }
 
+    public @NotNull String getArg(final int index) throws IndexOutOfBoundsException {
+        return getArg(ArgType.STRING, index);
+    }
+
+    public <T> @Nullable T getArgOrNull(final @NotNull ArgType<T> type, final int index) {
+        try {
+            return checkNotNull(type, "type").parse(args[index]);
+        } catch (final RuntimeException exception) {
+            return null;
+        }
+    }
+
+    @Beta
     public @NotNull CommandInvocation clipArgsAndCopy(final int index) throws IllegalArgumentException {
         Preconditions.checkArgument(index < 0 || index >= getArgs().length, "Index out of bounds");
         return new CommandInvocation(getJourney(), getBukkitSender(), getAliases(), Arrays.copyOfRange(getArgs(), index, getArgs().length), getSender());
     }
 
+    public boolean checkPermission(final @NotNull String permission) {
+        return getSender().hasPermission(permission);
+    }
+
     @FunctionalInterface
     public interface ArgType<T> {
         @NotNull T parse(@NotNull String arg) throws IllegalArgumentException;
+        ArgType<UUID> UUID = java.util.UUID::fromString;
         ArgType<Player> PLAYER = arg -> {
             Player player;
             if ((player = Bukkit.getPlayer(arg)) == null) {
                 try {
-                    player = Bukkit.getPlayer(UUID.fromString(arg));
+                    player = Bukkit.getPlayer(UUID.parse(arg));
                 } catch (final Exception ignore) {
 
                 }

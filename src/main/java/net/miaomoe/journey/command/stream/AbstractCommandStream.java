@@ -25,6 +25,7 @@ import lombok.experimental.Accessors;
 import net.miaomoe.journey.command.CommandInvocation;
 import net.miaomoe.journey.functions.exceptionally.ExceptionBiConsumer;
 import net.miaomoe.journey.functions.exceptionally.ExceptionConsumer;
+import net.miaomoe.journey.utils.math.Compare;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -91,11 +92,23 @@ public abstract class AbstractCommandStream<T extends AbstractCommandStream<?>> 
 
     @SneakyThrows
     public <A> @NotNull T withArg(
-            final @NotNull CommandInvocation.ArgType<T> argType,
+            final @NotNull CommandInvocation.ArgType<A> argType,
             final int index,
-            final ExceptionBiConsumer<@NotNull A, @NotNull CommandInvocation> func
-    ) {
-        func.accept((A) invocation().getArg(argType, index), invocation());
+            final @NotNull ExceptionBiConsumer<@NotNull A, @NotNull CommandInvocation> func
+    ) throws IllegalArgumentException, IndexOutOfBoundsException {
+        func.accept(invocation().getArg(argType, index), invocation());
         return (T) this;
+    }
+
+    public @NotNull T withArg(final int index, final @NotNull ExceptionBiConsumer<@NotNull String, @NotNull CommandInvocation> func) throws IndexOutOfBoundsException {
+        return withArg(CommandInvocation.ArgType.STRING, index, func);
+    }
+
+    public boolean checkArgsLength(final @NotNull Compare compare, final int excepted) {
+        return invocation().checkArgsLength(compare, excepted);
+    }
+
+    public boolean checkPermission(final @NotNull String permission) {
+        return invocation.checkPermission(permission);
     }
 }
