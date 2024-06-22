@@ -52,6 +52,11 @@ public abstract class AbstractCommandStream<T extends AbstractCommandStream<?>> 
         return (T) this;
     }
 
+    public final @NotNull T run(final @NotNull Runnable runnable) {
+        runnable.run();
+        return (T) this;
+    }
+
     public final @NotNull T tryCatching(
             final @NotNull ExceptionConsumer<@NotNull CommandInvocation> func,
             final @NotNull Consumer<@NotNull Throwable> onException
