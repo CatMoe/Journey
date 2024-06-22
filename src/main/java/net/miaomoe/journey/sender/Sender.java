@@ -48,7 +48,8 @@ public abstract class Sender<T extends CommandSender, U extends Sender<?, ?>> im
     }
 
     public @NotNull U sendMessage(final @NotNull Component component) {
-        getBukkitObject().sendMessage(PresetsSerializer.serialize(PresetsSerializer.legacySection, component));
+        //getBukkitObject().sendMessage(PresetsSerializer.serialize(PresetsSerializer.legacySection, component));
+        getJourney().audiences().sender(getBukkitObject()).sendMessage(component);
         return getThis();
     }
 
