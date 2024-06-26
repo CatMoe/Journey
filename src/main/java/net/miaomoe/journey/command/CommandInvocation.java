@@ -57,7 +57,7 @@ public final class CommandInvocation {
     }
 
     public boolean checkArgsLength(final @NotNull Compare compare, final int excepted) {
-        return checkNotNull(compare, "compare").compare(excepted, getArgs().length);
+        return checkNotNull(compare, "compare").compare(getArgs().length, excepted);
     }
 
     public <T> @NotNull T getArg(
