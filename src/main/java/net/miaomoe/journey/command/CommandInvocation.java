@@ -87,7 +87,7 @@ public final class CommandInvocation {
 
     @Beta
     public @NotNull CommandInvocation clipArgsAndCopy(final int index) throws IllegalArgumentException {
-        Preconditions.checkArgument(index < 0 || index >= getArgs().length, "Index out of bounds");
+        Preconditions.checkArgument(index > 0 && index <= getArgs().length, "Index out of bounds");
         return new CommandInvocation(getJourney(), getBukkitSender(), getAliases(), Arrays.copyOfRange(getArgs(), index, getArgs().length), getSender());
     }
 

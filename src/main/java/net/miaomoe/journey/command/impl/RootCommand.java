@@ -115,7 +115,7 @@ public class RootCommand extends AbstractCommand implements CommandRegistrable<A
     @Override public boolean isAliases(final @NotNull String name) {
         final String n = checkNotNull(name, "name").toLowerCase(Locale.ROOT);
         if (subCommands.containsKey(n)) {
-            return !linkedAliases.containsKey(n);
+            return linkedAliases.containsKey(n);
         }
         return false;
     }
