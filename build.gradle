@@ -29,8 +29,8 @@ repositories {
 dependencies {
     // lombok
     compileOnly("org.jetbrains:annotations:24.1.0")
-    compileOnly("org.projectlombok:lombok:1.18.32")
-    annotationProcessor("org.projectlombok:lombok:1.18.32")
+    compileOnly("org.projectlombok:lombok:1.18.34")
+    annotationProcessor("org.projectlombok:lombok:1.18.34")
     compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT") // Install this server jar from build tool.
     compileOnly("net.kyori:adventure-api:$adventureVersion")
     compileOnly("net.kyori:adventure-text-minimessage:$adventureVersion")
