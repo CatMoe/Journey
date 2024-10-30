@@ -28,15 +28,15 @@ repositories {
 
 dependencies {
     // lombok
-    compileOnly("org.jetbrains:annotations:24.1.0")
-    compileOnly("org.projectlombok:lombok:1.18.32")
-    annotationProcessor("org.projectlombok:lombok:1.18.32")
+    compileOnly("org.jetbrains:annotations:26.0.1")
+    compileOnly("org.projectlombok:lombok:1.18.34")
+    annotationProcessor("org.projectlombok:lombok:1.18.34")
     compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT") // Install this server jar from build tool.
     compileOnly("net.kyori:adventure-api:$adventureVersion")
     compileOnly("net.kyori:adventure-text-minimessage:$adventureVersion")
     compileOnly("net.kyori:adventure-text-serializer-legacy:$adventureVersion")
     compileOnly("net.kyori:adventure-text-serializer-plain:$adventureVersion")
-    compileOnly("net.kyori:adventure-platform-bukkit:4.3.3")
+    compileOnly("net.kyori:adventure-platform-bukkit:4.3.4")
     implementation("com.alessiodp.libby:libby-bukkit:2.0.0-SNAPSHOT")
 }
 
