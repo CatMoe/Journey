@@ -6,3 +6,4 @@ author: CatMoe
 softdepend:
   - ViaVersion
   - ProtocolLib
+  - packetevents
