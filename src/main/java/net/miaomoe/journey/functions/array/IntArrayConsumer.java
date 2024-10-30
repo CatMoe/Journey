@@ -19,5 +19,6 @@ package net.miaomoe.journey.functions.array;
 
 import java.util.function.Consumer;
 
+@SuppressWarnings("unused")
 public interface IntArrayConsumer extends Consumer<int[]> {
 }

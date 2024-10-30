@@ -20,5 +20,6 @@ package net.miaomoe.journey.functions.array;
 import java.util.function.Consumer;
 
 @FunctionalInterface
+@SuppressWarnings("unused")
 public interface ByteArrayConsumer extends Consumer<byte[]> {
 }

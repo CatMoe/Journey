@@ -19,6 +19,7 @@ package net.miaomoe.journey.functions.array;
 
 import java.util.function.BiConsumer;
 
+@SuppressWarnings("unused")
 public interface IntArrayBiConsumer<T> extends BiConsumer<T, int[]> {
     void accept(T t, int[] array);
 }

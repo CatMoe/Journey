@@ -22,6 +22,7 @@ import lombok.NoArgsConstructor;
 import net.miaomoe.journey.utils.storage.primitive.IntStorage;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public interface IntAttribute<T extends IntAttribute<T>> extends Attribute<IntStorage, T> {
     @Override
     default IntStorage tryCastValue(final @NotNull Object o) throws ClassCastException {
