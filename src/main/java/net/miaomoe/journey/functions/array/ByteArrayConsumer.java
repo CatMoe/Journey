@@ -15,13 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.miaomoe.journey.functions.extend;
+package net.miaomoe.journey.functions.array;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.UUID;
+import java.util.function.Consumer;
 
 @FunctionalInterface
-public interface UUIDHolder {
-    @NotNull UUID uuid();
+public interface ByteArrayConsumer extends Consumer<byte[]> {
 }

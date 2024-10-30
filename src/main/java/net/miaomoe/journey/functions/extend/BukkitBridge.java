@@ -19,6 +19,7 @@ package net.miaomoe.journey.functions.extend;
 
 import org.jetbrains.annotations.NotNull;
 
+@FunctionalInterface
 public interface BukkitBridge<T> {
     @NotNull T getBukkitObject();
 }
