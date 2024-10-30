@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import net.miaomoe.journey.Journey;
 import net.miaomoe.journey.JourneyLoader;
+import net.miaomoe.journey.attribute.Attributes;
 import net.miaomoe.journey.functions.exceptionally.ExceptionSupplier;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
@@ -34,6 +35,7 @@ import java.util.logging.Level;
 @RequiredArgsConstructor
 public final class ThreadUtil {
     @NotNull private final Journey<?> journey;
+
     public static final Unconditional SERVER_THREAD = new Unconditional() {
         @Override public void run(@NotNull ThreadUtil util, @NotNull Runnable runnable) {
             if (isCurrentThread()) runnable.run(); else {
@@ -55,30 +57,32 @@ public final class ThreadUtil {
         @Override public boolean isCurrentThread() { return Bukkit.isPrimaryThread(); }
 
         private void checkStartup(final @NotNull ThreadUtil util) {
-            if (!JourneyLoader.getInstance().isFullStartUp()) {
+            if (!JourneyLoader.getInstance().isFullStartUp() && util.getJourney().getBooleanAttribute(Attributes.SCHEDULE_DELAYED_CHECK, true)) {
                 util.getJourney().getPlugin().getLogger().log(
                         Level.WARNING,
-                        "Try commit tasks to scheduler. This task will be run when startup finished. If not, Run this task directly in main thread.",
+                        "[Journey] Plugin try to schedule main-thread task at async thread before server finished bootstrap.",
                         new IllegalStateException()
+                );
+                util.getJourney().getPlugin().getLogger().log(
+                        Level.WARNING,
+                        "[Journey] If this is intentional and you want to disable the warning. Please set attribute \"SCHEDULE_DELAYED_CHECK\" to false."
                 );
             }
         }
     };
+
     public static final Unconditional ASYNC = new Unconditional() {
-        @Override public void run(@NotNull ThreadUtil util, @NotNull Runnable runnable) {
-            CompletableFuture.runAsync(runnable);
-        }
+        @Override public void run(@NotNull ThreadUtil util, @NotNull Runnable runnable) { CompletableFuture.runAsync(runnable); }
         @Override public <T> CompletableFuture<T> get(@NotNull ThreadUtil util, @NotNull ExceptionSupplier<T> supplier) {
             return CompletableFuture.supplyAsync(supplier.asSupplier());
         }
         @Override public boolean isCurrentThread() { return false; }
     };
+
     @Deprecated public static final Unconditional CURRENT = new Unconditional() {
         @Override public void run(@NotNull ThreadUtil util, @NotNull Runnable runnable) { runnable.run(); }
         @Override public <T> CompletableFuture<T> get(@NotNull ThreadUtil util, @NotNull ExceptionSupplier<T> supplier) {
-            final CompletableFuture<T> future = new CompletableFuture<>();
-            future.complete(ExceptionSupplier.get(supplier));
-            return future;
+            return CompletableFuture.completedFuture(supplier.asSupplier().get());
         }
         @Override public boolean isCurrentThread() { return true; }
     };

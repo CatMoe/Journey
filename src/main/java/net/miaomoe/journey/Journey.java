@@ -20,6 +20,7 @@ package net.miaomoe.journey;
 import lombok.Getter;
 import lombok.ToString;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.miaomoe.journey.attribute.Attribute;
 import net.miaomoe.journey.command.CommandManager;
 import net.miaomoe.journey.modules.Module;
 import net.miaomoe.journey.utils.Lazy;
@@ -38,11 +39,12 @@ import static net.miaomoe.journey.utils.Preconditions.checkNotNull;
 
 @SuppressWarnings("unused")
 @ToString
-public final class Journey<P extends JavaPlugin> implements JourneyMethods<P> {
+public final class Journey<P extends JavaPlugin> implements JourneyMethods<P>, Attribute.ProxiedAttributeMap {
     private final @NotNull AbstractUnmodifiable unmodifiable = new AbstractUnmodifiable() {};
     private final @NotNull Lazy<BukkitAudiences> audience;
     private final @NotNull ThreadUtil threadUtil = new ThreadUtil(this);
     private final @NotNull CommandManager commandManager;
+    @Getter private final @NotNull Attribute.AttributeMap attributeMap = Attribute.createSynchronizeMap();
     private static abstract class AbstractUnmodifiable {
         private boolean isDisabled = false;
         private final Map<Class<? extends Module>, Module> modules = new HashMap<>();

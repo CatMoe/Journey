@@ -15,14 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.miaomoe.journey.functions.extend;
+package net.miaomoe.journey.attribute;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.UUID;
-
-@FunctionalInterface
-@SuppressWarnings("unused")
-public interface UUIDHolder {
-    @NotNull UUID uuid();
+public interface Attributes {
+    BooleanAttribute.BooleanAttributeImpl SCHEDULE_DELAYED_CHECK = BooleanAttribute.create();
 }
