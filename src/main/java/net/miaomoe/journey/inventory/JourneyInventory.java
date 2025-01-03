@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024-2024. CatMoe / Journey Contributors
+ * Copyright (C) 2024-2025. CatMoe / Journey Contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,6 +41,8 @@ public interface JourneyInventory<P extends JavaPlugin> extends InventoryHolder 
     void onInventoryClick(final @NotNull InventoryClickEvent event);
     void onInventoryClose(final @NotNull InventoryCloseEvent event);
 
+    default boolean isClosed() { return false; }
+
     final class InventoryListener implements Listener {
 
         public InventoryListener() throws IllegalAccessException {
@@ -64,6 +66,7 @@ public interface JourneyInventory<P extends JavaPlugin> extends InventoryHolder 
             final InventoryHolder holder = event.getInventory().getHolder();
             if (holder instanceof JourneyInventory) {
                 final JourneyInventory<?> journeyInventory = (JourneyInventory<?>) holder;
+                if (journeyInventory.isClosed()) return;
                 try {
                     consumer.accept(journeyInventory, event);
                 } catch (Throwable throwable) {
