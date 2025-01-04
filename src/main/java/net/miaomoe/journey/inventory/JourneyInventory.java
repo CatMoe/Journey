@@ -22,6 +22,7 @@ import net.miaomoe.journey.JourneyLoader;
 import net.miaomoe.journey.functions.exceptionally.ExceptionBiConsumer;
 import net.miaomoe.journey.utils.Preconditions;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -66,7 +67,12 @@ public interface JourneyInventory<P extends JavaPlugin> extends InventoryHolder 
             final InventoryHolder holder = event.getInventory().getHolder();
             if (holder instanceof JourneyInventory) {
                 final JourneyInventory<?> journeyInventory = (JourneyInventory<?>) holder;
-                if (journeyInventory.isClosed()) return;
+                if (journeyInventory.isClosed()) {
+                    if (event instanceof Cancellable) {
+                        ((Cancellable) event).setCancelled(true);
+                    }
+                    return;
+                }
                 try {
                     consumer.accept(journeyInventory, event);
                 } catch (Throwable throwable) {
